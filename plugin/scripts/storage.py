@@ -23,6 +23,23 @@ def digest(path):
         for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
     return h.hexdigest()
 
+def analysis_values(body):
+    if body.get('confirmed') is not True:raise ValueError('请先获得用户对本次图片和目标图库的明确保存确认')
+    if not isinstance(body.get('libraryPath'),str) or not Path(body['libraryPath']).is_absolute():raise ValueError('请传入用户确认的目标图库绝对路径 libraryPath')
+    request_id=body.get('requestId')
+    if not isinstance(request_id,str) or not re.fullmatch(r'[A-Za-z0-9_-]{8,100}',request_id):raise ValueError('requestId须为8至100位唯一请求ID；重试请保持不变')
+    if bool(body.get('itemId'))==bool(body.get('imagePath')):raise ValueError('itemId与imagePath必须且只能提供一个')
+    name=body.get('name');tags=body.get('tags');prompt=body.get('prompt')
+    if not isinstance(name,str):raise ValueError('名称必须是文字')
+    name=name.strip()
+    if not name or len(name)>180 or re.search(r'[<>:"/\\|?*\x00-\x1f]',name) or name.endswith(('.', ' ')) or re.fullmatch(r'(?i)(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\..*)?',name):raise ValueError('名称不是有效文件名')
+    if not isinstance(tags,list) or not tags or not all(isinstance(t,str) and t.strip() for t in tags):raise ValueError('请提供非空分类标签列表')
+    if not isinstance(prompt,str) or not prompt.strip():raise ValueError('请提供已完成的图片反推提示词')
+    return request_id,{'name':name,'tags':list(dict.fromkeys(t.strip() for t in tags)),'annotation':prompt}
+
+def fingerprint(value):
+    return hashlib.sha256(json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf-8')).hexdigest()
+
 class Store:
     def __init__(self,root,grace=60):
         self.root=Path(root).expanduser().resolve()
@@ -208,3 +225,94 @@ class Store:
                 if oldpath and newpath and newpath!=oldpath:newpath.rename(oldpath)
                 raise
             return self.item(r['id'])
+
+    def _analysis_result(self,receipt,replayed=False):
+        # Read the committed file, not just the in-memory row, before claiming success.
+        disk=json.loads(self.file.read_text(encoding='utf-8'))
+        row=disk['items'].get(receipt['itemId'])
+        if disk.get('libraryId')!=self.db['libraryId'] or row is None or row.get('missingSince'):
+            raise ValueError('保存后的资料不可读取；未确认保存成功，请保持同一requestId重试')
+        actual={k:row.get(k) for k in ('name','tags','annotation','path','hash')}
+        if fingerprint(actual)!=receipt['resultHash']:
+            raise ValueError('本请求已保存，但资料随后有变化；未重复写入，请重新读取')
+        if digest(self.path(row))!=row['hash']:raise ValueError('图片内容已变化，未确认保存成功')
+        return {'saved':True,'verified':True,'replayed':replayed,'imported':receipt['imported'],
+                'item':self.brief(row),'libraryPath':str(self.root),'metadataPath':str(self.file)}
+
+    def save_analysis(self,body):
+        request_id,values=analysis_values(body)
+        body_hash=fingerprint(body)
+        with self.lock:
+            if Path(body['libraryPath']).resolve()!=self.root:raise ValueError('当前图库与用户确认的目标不同，未写入；请重新确认目标图库')
+            if not self.root.is_dir() or not self.file.is_file():raise ValueError('图库暂时不可访问，未保存')
+            receipt=self.db.get('analysisSaves',{}).get(request_id)
+            if receipt:
+                if receipt['bodyHash']!=body_hash:raise ValueError('requestId已用于不同内容，请勿改变重试参数')
+                return self._analysis_result(receipt,True)
+            before=copy.deepcopy(self.db);oldpath=None;newpath=None;created=False;renamed=False;thumb=None
+            try:
+                if body.get('itemId'):
+                    row=self.item(body['itemId']);expected=body.get('expected')
+                    fields=('name','tags','annotation','path','hash')
+                    if not isinstance(expected,dict) or any(k not in expected or expected[k]!=row.get(k) for k in fields):
+                        raise ValueError('资料或图片已变化；expected须包含最新读取的name、tags、annotation、path、hash')
+                    oldpath=self.path(row)
+                    if digest(oldpath)!=row['hash']:raise ValueError('图片内容已变化，请重新读取并分析')
+                    newpath=oldpath.with_name(values['name']+'.'+row['ext'])
+                    if newpath!=oldpath:
+                        if newpath.exists():raise ValueError('同名文件已存在，不覆盖')
+                        oldpath.rename(newpath);renamed=True
+                    row['path']=newpath.relative_to(self.root).as_posix()
+                else:
+                    if body.get('expected') is not None:raise ValueError('外部图片导入不接受expected；更新库内素材请使用itemId')
+                    source=Path(body['imagePath']).expanduser()
+                    if not source.is_absolute() or source.is_symlink():raise ValueError('imagePath须为外部原图的绝对本地路径，不接受符号链接')
+                    source=source.resolve()
+                    if source.is_relative_to(self.root):raise ValueError('图片已在当前图库内，请读取素材后使用itemId更新')
+                    if not source.is_file() or source.suffix.lower() not in FORMATS:raise ValueError('外部图片不存在或格式不支持')
+                    sig=source.stat();sha=digest(source)
+                    duplicates=[r['id'] for r in self.db['items'].values() if r.get('hash')==sha]
+                    if duplicates:raise ValueError('相同图片已有资料，请读取并确认更新itemId：'+','.join(duplicates))
+                    # Also catch a manually copied image before the background scan indexes it.
+                    for folder,dirs,files in os.walk(self.root,followlinks=False):
+                        dirs[:]=[d for d in dirs if (Path(folder)/d)!=self.meta and not (Path(folder)/d).is_symlink() and not getattr(Path(folder)/d,'is_junction',lambda:False)()]
+                        for filename in files:
+                            p=Path(folder)/filename
+                            if not p.is_symlink() and p.suffix.lower() in FORMATS and p.stat().st_size==sig.st_size and digest(p)==sha:
+                                raise ValueError('图库中已有相同图片，等待扫描后用itemId更新：'+str(p))
+                    newpath=self.root/(values['name']+source.suffix.lower())
+                    with newpath.open('xb') as dest:
+                        created=True
+                        with source.open('rb') as src:shutil.copyfileobj(src,dest)
+                        dest.flush();os.fsync(dest.fileno())
+                    after=source.stat()
+                    if (sig.st_size,sig.st_mtime_ns)!=(after.st_size,after.st_mtime_ns) or digest(newpath)!=sha:
+                        raise ValueError('原图在复制期间发生变化，未导入')
+                    with Image.open(newpath) as raw:
+                        picture=ImageOps.exif_transpose(raw).convert('RGB');w,h=picture.size
+                        picture.thumbnail((600,600));small=picture.copy();small.thumbnail((80,80))
+                        quant=small.quantize(colors=12);palette=quant.getpalette()
+                        palettes=[{'color':palette[k*3:k*3+3],'ratio':n/(small.width*small.height)*100} for n,k in quant.getcolors() or []]
+                    st=newpath.stat()
+                    row={'id':uuid.uuid4().hex,'path':newpath.relative_to(self.root).as_posix(),'ext':newpath.suffix[1:],
+                         'width':w,'height':h,'size':st.st_size,'signature':[st.st_size,st.st_mtime_ns],
+                         'hash':sha,'palettes':palettes,'modificationTime':st.st_mtime*1000,'url':''}
+                    thumb=self.cache/(row['id']+'.jpg');picture.save(thumb,format='JPEG',quality=85)
+                row.update(values)
+                # UI-only fields from item() do not belong in the persistent index.
+                row.pop('folders',None);row.pop('localImage',None)
+                self.db['items'][row['id']]=row
+                receipt={'bodyHash':body_hash,'itemId':row['id'],'imported':created,
+                         'resultHash':fingerprint({k:row.get(k) for k in ('name','tags','annotation','path','hash')})}
+                self.db.setdefault('analysisSaves',{})[request_id]=receipt
+                self.save()
+            except Exception:
+                self.db=before
+                if thumb:thumb.unlink(missing_ok=True)
+                if created and newpath:newpath.unlink(missing_ok=True)
+                elif renamed and newpath.exists():
+                    if oldpath.exists():raise RuntimeError('保存失败且原路径已被占用，请保留两份文件后检查')
+                    newpath.rename(oldpath)
+                raise
+            # Once committed, verification errors must not undo or repeat the saved write.
+            return self._analysis_result(receipt)

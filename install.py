@@ -7,15 +7,17 @@ def main():
  root=Path(__file__).resolve().parent
  dest=Path.home()/'plugins/offline-image-library'
  market=Path.home()/'.agents/plugins/marketplace.json'
- cli=shutil.which('codex')
+ cli=shutil.which('codex.cmd') or shutil.which('codex')
  if sys.version_info<(3,10):raise RuntimeError('需要 Python 3.10 或更新版本。')
  if not cli:raise RuntimeError('没有找到 Codex 命令。请先安装 Codex CLI，并重新运行安装程序。')
  for f in ['plugin/.codex-plugin/plugin.json','plugin/scripts/hub.py','helpers/create_basic_plugin.py']:
   if not (root/f).is_file():raise RuntimeError('请完整解压安装包后运行：'+f)
  print('插件安装位置：'+str(dest))
  print('Python：'+sys.executable)
+ subprocess.run([cli,'--version'],check=True)
+ subprocess.run([cli,'plugin','add','--help'],check=True,stdout=subprocess.DEVNULL)
  if a.check:
-  print('安装前检查通过，未修改任何文件。');return
+  print('安装前检查通过：命令可用；尚未安装，也未验证缓存写入或图库连接。');return
  stamp=time.strftime('%Y%m%d-%H%M%S')
  if dest.exists():
   backup=dest.with_name('offline-image-library-backup-'+stamp)
@@ -41,7 +43,9 @@ def main():
  subprocess.run([sys.executable,str(root/'helpers/update_plugin_cachebuster.py'),str(dest)],check=True)
  name=subprocess.check_output([sys.executable,str(root/'helpers/read_marketplace_name.py'),'--marketplace-path',str(market)],text=True).strip()
  # Registry names are validated by the bundled scaffold helper.
- subprocess.run(['powershell','-NoProfile','-Command',"& codex plugin add 'offline-image-library@"+name+"' --json"],check=True)
+ subprocess.run([cli,'plugin','add','offline-image-library@'+name,'--json'],check=True)
+ installed=json.loads(subprocess.check_output([cli,'plugin','list','--json'],text=True,encoding='utf-8'))
+ if not any(x.get('pluginId')=='offline-image-library@'+name and x.get('installed') and x.get('enabled') for x in installed.get('installed',[])):raise RuntimeError('缓存注册回读未确认，请保留完整输出检查。')
  print('安装成功。在 Codex 新建对话说“打开离线图片与提示词管理库”。无需启动 Eagle。')
  print('本安装程序不会复制或覆盖图库图片；首次使用点击选择图库文件夹。')
 

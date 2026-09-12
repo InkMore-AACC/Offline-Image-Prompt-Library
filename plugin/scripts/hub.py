@@ -4,6 +4,7 @@ from pathlib import Path
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from urllib.parse import urlparse,parse_qs,urlencode
 from urllib.request import Request,urlopen
+from urllib.error import HTTPError
 from storage import Store,atomic
 import browse_backend
 
@@ -62,6 +63,7 @@ class Handler(BaseHTTPRequestHandler):
             if u.path=='/health':return self.send({'app':'offline-image-library'})
             if u.path=='/api/status':return self.send({'csrf':self.server.csrf,'folders':STORE.folders() if STORE else [],'referenceFolderId':'','path':str(STORE.root) if STORE else '', 'revision':STORE.revision if STORE else 0,'warning':STORE.error if STORE else ''})
             if u.path=='/api/revision':return self.send({'revision':STORE.revision if STORE else 0,'warning':STORE.error if STORE else '', 'libraryId':STORE.db['libraryId'] if STORE else ''})
+            if u.path=='/api/library':return self.send(library())
             if u.path=='/api/references':return self.send(current().selected(q.get('task')))
             if u.path=='/api/browse':return self.send(browse_backend.browse(sys.modules[__name__],q))
             if u.path=='/api/item':return self.send(current().item(q['id']))
@@ -83,6 +85,7 @@ class Handler(BaseHTTPRequestHandler):
             with CONFIG_LOCK:
                 if self.path=='/api/select':return self.send(current().select(a.get('taskId'),a['ids']))
                 if self.path=='/api/edit':return self.send(current().edit(a))
+                if self.path=='/api/save-analysis':return self.send(current().save_analysis(a))
             return self.send({'error':'not found'},404)
         except Exception as e:self.send({'error':str(e)},400)
 
@@ -111,17 +114,36 @@ def ensure_server():
     raise RuntimeError('离线图库启动失败，请查看server.log')
 
 def request(path,body=None):
-    ensure_server();headers={}
-    if body is not None:
-        with urlopen(BASE+'/api/status') as r:headers['X-Library-Token']=json.load(r)['csrf']
-        headers['Content-Type']='application/json'
-    req=Request(BASE+path,data=json.dumps(body).encode() if body is not None else None,headers=headers)
-    with urlopen(req,timeout=120) as r:return json.load(r)
+    try:
+        ensure_server();headers={}
+        if body is not None:
+            with urlopen(BASE+'/api/status',timeout=120) as r:headers['X-Library-Token']=json.load(r)['csrf']
+            headers['Content-Type']='application/json'
+        req=Request(BASE+path,data=json.dumps(body).encode() if body is not None else None,headers=headers)
+        with urlopen(req,timeout=120) as r:return json.load(r)
+    except HTTPError as error:
+        message=f'HTTP {error.code}: {error.reason}'
+        try:
+            payload=json.load(error)
+            if isinstance(payload,dict) and isinstance(payload.get('error'),str):message=payload['error']
+        except (ValueError,OSError):pass
+        finally:error.close()
+        raise RuntimeError(message) from error
 
 TOOLS=[
  {'name':'offline_library_open','description':'打开当前任务的离线图片与提示词管理库；仅返回右侧浏览器网址，不读取全库。','inputSchema':{'type':'object','properties':{'taskId':{'type':'string'}},'required':['taskId']}},
  {'name':'offline_library_selected','description':'读取当前任务选中图片的本地路径、完整提示词、标签，按用户要求分析或创作。','inputSchema':{'type':'object','properties':{'taskId':{'type':'string'}},'required':['taskId']}},
  {'name':'offline_library_configure','description':'用户明确指定本地图片文件夹后连接它；创建可见的图库资料目录。','inputSchema':{'type':'object','properties':{'path':{'type':'string'}},'required':['path']}},
+ {'name':'offline_library_info','description':'只读取当前已配置离线图库的名称与文件夹路径，供保存确认时说明目标；不扫描全库或更换目录。','inputSchema':{'type':'object','properties':{}}},
+ {'name':'offline_library_item','description':'按itemId读取当前离线图库单张素材的最新资料，用于检查分析结果保存前的expected。','inputSchema':{'type':'object','properties':{'itemId':{'type':'string'}},'required':['itemId']}},
+ {'name':'offline_library_save_analysis','description':'仅在实际图片反推完成且用户明确确认本次图片与离线图库后，一次保存名称、分类标签及完整原图反推提示词。库内原条目更新；外部本地原图仅复制导入。不得保存仅为生图改写的创作提示词。requestId在重试时保持不变；返回磁盘回读验证结果。','inputSchema':{'type':'object','properties':{
+     'confirmed':{'type':'boolean','const':True},'requestId':{'type':'string','minLength':8,'maxLength':100},
+     'libraryPath':{'type':'string','description':'用户确认入库时由 offline_library_info 返回的目标图库绝对路径'},
+     'name':{'type':'string','minLength':1},'tags':{'type':'array','minItems':1,'items':{'type':'string','minLength':1}},'prompt':{'type':'string','minLength':1},
+     'itemId':{'type':'string','minLength':1},'imagePath':{'type':'string','minLength':1},
+     'expected':{'type':'object','properties':{'name':{'type':'string'},'tags':{'type':'array','items':{'type':'string'}},'annotation':{'type':'string'},'path':{'type':'string'},'hash':{'type':'string'}},'required':['name','tags','annotation','path','hash']}},
+     'required':['confirmed','requestId','libraryPath','name','tags','prompt'],
+     'oneOf':[{'required':['itemId','expected'],'not':{'required':['imagePath']}},{'required':['imagePath'],'not':{'anyOf':[{'required':['itemId']},{'required':['expected']}]}}]}},
  {'name':'offline_library_edit','description':'用户授权后保存指定字段；expected必须是此前读取的原值。','inputSchema':{'type':'object','properties':{'id':{'type':'string'},'field':{'type':'string','enum':['name','tags','annotation']},'value':{},'expected':{}},'required':['id','field','value','expected']}}
 ]
 def call(name,a):
@@ -132,6 +154,13 @@ def call(name,a):
     if name=='offline_library_selected':return request('/api/references?'+urlencode({'task':a['taskId']}))
     if name=='offline_library_configure':return request('/api/configure',a)
     if name=='offline_library_edit':return request('/api/edit',a)
+    if name=='offline_library_item':return request('/api/item?'+urlencode({'id':a['itemId']}))
+    if name=='offline_library_info':return request('/api/library')
+    if name=='offline_library_save_analysis':
+        # Reject missing/false consent before even connecting to or starting the service.
+        from storage import analysis_values
+        analysis_values(a)
+        return request('/api/save-analysis',a)
     raise ValueError('未知工具')
 def mcp():
     for line in sys.stdin:
