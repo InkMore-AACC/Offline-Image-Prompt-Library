@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+*.log
+OfflineLibraryData/
+图库资料/

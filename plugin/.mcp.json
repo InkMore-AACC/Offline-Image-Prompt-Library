@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "offline_library": {
+      "command": "python",
+      "args": [
+        "-X",
+        "utf8",
+        "REPLACED_BY_INSTALLER/scripts/hub.py",
+        "mcp"
+      ]
+    }
+  }
+}
