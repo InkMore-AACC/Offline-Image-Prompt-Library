@@ -4,7 +4,9 @@ from collections import Counter
 from pathlib import Path
 from PIL import Image, ImageOps
 
-FORMATS={'.jpg','.jpeg','.png','.webp','.gif','.bmp','.tif','.tiff','.ico','.avif'}
+from video_media import VIDEO_FORMATS, is_video, video_picture
+
+FORMATS=VIDEO_FORMATS|{'.jpg','.jpeg','.png','.webp','.gif','.bmp','.tif','.tiff','.ico','.avif'}
 DATA='图库资料'
 
 def atomic(path,value,backup=True):
@@ -118,13 +120,19 @@ class Store:
                 p=self.root/rel
                 try:
                     sha=ready[rel]
-                    with Image.open(p) as raw:
-                        picture=ImageOps.exif_transpose(raw).convert('RGB');w,h=picture.size
-                        picture.thumbnail((600,600));small=picture.copy();small.thumbnail((80,80))
-                        quant=small.quantize(colors=12);palette=quant.getpalette();colors=quant.getcolors() or []
-                        palettes=[{'color':palette[k*3:k*3+3],'ratio':n/(small.width*small.height)*100} for n,k in colors]
+                    media={}
+                    if is_video(p):
+                        picture,media=video_picture(p);w,h=media['width'],media['height']
+                    else:
+                        with Image.open(p) as raw:picture=ImageOps.exif_transpose(raw).convert('RGB')
+                        w,h=picture.size;media={'mediaType':'image'}
+                    picture.thumbnail((600,600));small=picture.copy();small.thumbnail((80,80))
+                    quant=small.quantize(colors=12);palette=quant.getpalette();colors=quant.getcolors() or []
+                    palettes=[{'color':palette[k*3:k*3+3],'ratio':n/(small.width*small.height)*100} for n,k in colors]
                     if (p.stat().st_size,p.stat().st_mtime_ns)!=sig:continue
-                except (OSError,ValueError):continue
+                except (OSError,ValueError) as e:
+                    if is_video(p):self.error=str(e)
+                    continue
                 if row and row.get('hash') and row['hash']!=sha:row=None
                 if row is None:
                     candidates=[r for r in rows.values() if not occupies(r) and r.get('hash')==sha]
@@ -137,6 +145,7 @@ class Store:
                             for c in candidates:c['ambiguous']=True
                             self.error='存在相同内容的多张图片，旧资料已保留，未自动关联'
                 row.update(path=rel,name=p.stem,ext=p.suffix[1:],width=w,height=h,size=sig[0],signature=list(sig),hash=sha,palettes=palettes,modificationTime=p.stat().st_mtime*1000)
+                row.update(media)
                 row.pop('missingSince',None)
                 tmp=self.cache/(row['id']+'.tmp');picture.save(tmp,format='JPEG',quality=85);os.replace(tmp,self.cache/(row['id']+'.jpg'))
                 self.pending.pop(rel,None);changed=True
@@ -158,9 +167,32 @@ class Store:
                         if ids!=selected['ids']:atomic(p,{'ids':ids},False)
                     except (OSError,ValueError,KeyError):pass
 
+    def edit_many(self,body):
+        """Atomic prompt/tag edits for an explicitly targeted import batch."""
+        with self.lock:
+            if Path(body.get('libraryPath','')).resolve()!=self.root:raise ValueError('目标图库已切换')
+            entries=body.get('items')
+            if not isinstance(entries,list) or not 1<=len(entries)<=100:raise ValueError('每批须为1至100条')
+            ids=[e['id'] for e in entries]
+            if len(set(ids))!=len(ids):raise ValueError('重复素材ID')
+            updates=[]
+            for e in entries:
+                row=self.item(e['id']);expected=e.get('expected',{})
+                if any(row.get(k)!=expected.get(k) or k not in expected for k in ('name','tags','annotation','path','hash')):raise ValueError('资料已修改，请重新读取')
+                if not isinstance(e.get('annotation'),str) or not isinstance(e.get('tags'),list) or not all(isinstance(t,str) and t.strip() for t in e['tags']):raise ValueError('提示词和标签格式无效')
+                updates.append((e['id'],{'annotation':e['annotation'],'tags':list(dict.fromkeys(t.strip() for t in e['tags']))}))
+            before=copy.deepcopy(self.db)
+            try:
+                for id,value in updates:self.db['items'][id].update(value)
+                self.save()
+            except Exception:self.db=before;raise
+            disk=json.loads(self.file.read_text(encoding='utf-8'))['items']
+            if any(any(disk[id].get(k)!=v for k,v in value.items()) for id,value in updates):raise RuntimeError('磁盘回读不一致')
+            return {'saved':True,'verified':True,'count':len(updates)}
+
     def brief(self,row):
         r=dict(row);parent=Path(r['path']).parent.as_posix();r['folders']=[] if parent=='.' else [parent]
-        r['localImage']=str(self.path(row));return r
+        r['localVideo' if is_video(self.path(row)) else 'localImage']=str(self.path(row));return r
 
     def items(self):
         with self.lock:return [self.brief(r) for r in self.db['items'].values() if not r.get('missingSince')]
@@ -253,6 +285,7 @@ class Store:
             try:
                 if body.get('itemId'):
                     row=self.item(body['itemId']);expected=body.get('expected')
+                    if ('.'+row['ext'].lower()) in VIDEO_FORMATS:raise ValueError('图片反推保存不接受视频；视频提示词请使用资料编辑')
                     fields=('name','tags','annotation','path','hash')
                     if not isinstance(expected,dict) or any(k not in expected or expected[k]!=row.get(k) for k in fields):
                         raise ValueError('资料或图片已变化；expected须包含最新读取的name、tags、annotation、path、hash')
@@ -269,7 +302,7 @@ class Store:
                     if not source.is_absolute() or source.is_symlink():raise ValueError('imagePath须为外部原图的绝对本地路径，不接受符号链接')
                     source=source.resolve()
                     if source.is_relative_to(self.root):raise ValueError('图片已在当前图库内，请读取素材后使用itemId更新')
-                    if not source.is_file() or source.suffix.lower() not in FORMATS:raise ValueError('外部图片不存在或格式不支持')
+                    if not source.is_file() or source.suffix.lower() not in (FORMATS-VIDEO_FORMATS):raise ValueError('外部图片不存在或格式不支持')
                     sig=source.stat();sha=digest(source)
                     duplicates=[r['id'] for r in self.db['items'].values() if r.get('hash')==sha]
                     if duplicates:raise ValueError('相同图片已有资料，请读取并确认更新itemId：'+','.join(duplicates))

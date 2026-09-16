@@ -1,3 +1,4 @@
+from video_media import serve_media, is_video, playback_file, PreviewPending
 """Standalone local folder library, HTTP and MCP. No Eagle calls."""
 import argparse,json,mimetypes,os,secrets,subprocess,sys,threading,time
 from pathlib import Path
@@ -50,11 +51,28 @@ class Handler(BaseHTTPRequestHandler):
     def send(self,value,status=200,ctype='application/json; charset=utf-8'):
         raw=value if isinstance(value,bytes) else json.dumps(value,ensure_ascii=False).encode()
         self.send_response(status);self.send_header('Content-Type',ctype);self.send_header('Content-Length',str(len(raw)));self.send_header('Cache-Control','no-store');self.send_header('X-Content-Type-Options','nosniff');self.end_headers()
-        try:self.wfile.write(raw)
+        try:
+            if self.command!='HEAD':self.wfile.write(raw)
         except (BrokenPipeError,ConnectionResetError,ConnectionAbortedError):pass
     def valid(self):return self.headers.get('Host')==f'127.0.0.1:{PORT}'
+    def do_HEAD(self):
+     self.do_GET()
     def do_GET(self):
-        with CONFIG_LOCK:self.get_locked()
+        if urlparse(self.path).path!='/media':
+            with CONFIG_LOCK:self.get_locked()
+            return
+        try:
+            if not self.valid():return self.send({'error':'Host rejected'},403)
+            q={k:v[0] for k,v in parse_qs(urlparse(self.path).query).items()}
+            with CONFIG_LOCK:
+                store=current();i=store.item(q['id']);p=store.cache/(i['id']+'.jpg') if q.get('thumb')=='1' else store.path(i)
+                if not p.exists():p=store.path(i)
+                cache=store.cache/'video-playback'
+            if q.get('play')=='1' and q.get('thumb')!='1':p=playback_file(p,cache,prepare=self.command!='HEAD')
+            return serve_media(self,p)
+        except PreviewPending:
+            self.send_response(202);self.send_header('Content-Length','0');self.send_header('Retry-After','2');self.end_headers()
+        except Exception as e:self.send({'error':str(e)},400)
     def get_locked(self):
         try:
             if not self.valid():return self.send({'error':'Host rejected'},403)
@@ -67,11 +85,9 @@ class Handler(BaseHTTPRequestHandler):
             if u.path=='/api/references':return self.send(current().selected(q.get('task')))
             if u.path=='/api/browse':return self.send(browse_backend.browse(sys.modules[__name__],q))
             if u.path=='/api/item':return self.send(current().item(q['id']))
-            if u.path=='/media':
-                store=current();i=store.item(q['id']);p=store.cache/(i['id']+'.jpg') if q.get('thumb')=='1' else store.path(i)
-                if not p.exists():p=store.path(i)
-                return self.send(p.read_bytes(),ctype=mimetypes.guess_type(p.name)[0] or 'application/octet-stream')
             return self.send({'error':'not found'},404)
+        except PreviewPending:
+         self.send_response(202);self.send_header('Content-Length','0');self.send_header('Retry-After','2');self.end_headers()
         except Exception as e:self.send({'error':str(e)},400)
     def do_POST(self):
         try:
@@ -85,6 +101,7 @@ class Handler(BaseHTTPRequestHandler):
             with CONFIG_LOCK:
                 if self.path=='/api/select':return self.send(current().select(a.get('taskId'),a['ids']))
                 if self.path=='/api/edit':return self.send(current().edit(a))
+                if self.path=='/api/edit-many':return self.send(current().edit_many(a))
                 if self.path=='/api/save-analysis':return self.send(current().save_analysis(a))
             return self.send({'error':'not found'},404)
         except Exception as e:self.send({'error':str(e)},400)
