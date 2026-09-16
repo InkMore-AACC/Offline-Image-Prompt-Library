@@ -1,15 +1,15 @@
 {
   "name": "offline-image-library",
-  "version": "1.0.0+codex.20260916140107",
-  "description": "浏览本地图片，管理标签与提示词，辅助分析和创作。",
+  "version": "1.0.0+codex.20260916142516",
+  "description": "\u6d4f\u89c8\u672c\u5730\u56fe\u7247\uff0c\u7ba1\u7406\u6807\u7b7e\u4e0e\u63d0\u793a\u8bcd\uff0c\u8f85\u52a9\u5206\u6790\u548c\u521b\u4f5c\u3002",
   "author": {
     "name": "Local developer"
   },
   "skills": "./skills/",
   "interface": {
-    "displayName": "离线图片与提示词管理库",
-    "shortDescription": "浏览本地图片，管理标签与提示词，辅助分析和创作。",
-    "longDescription": "独立的本地文件夹图库，不依赖 Eagle。支持原比例瀑布流、搜索筛选、标签和长提示词编辑、按任务选图与资料分析。",
+    "displayName": "\u79bb\u7ebf\u56fe\u7247\u4e0e\u63d0\u793a\u8bcd\u7ba1\u7406\u5e93",
+    "shortDescription": "\u6d4f\u89c8\u672c\u5730\u56fe\u7247\uff0c\u7ba1\u7406\u6807\u7b7e\u4e0e\u63d0\u793a\u8bcd\uff0c\u8f85\u52a9\u5206\u6790\u548c\u521b\u4f5c\u3002",
+    "longDescription": "\u72ec\u7acb\u7684\u672c\u5730\u6587\u4ef6\u5939\u56fe\u5e93\uff0c\u4e0d\u4f9d\u8d56 Eagle\u3002\u652f\u6301\u539f\u6bd4\u4f8b\u7011\u5e03\u6d41\u3001\u641c\u7d22\u7b5b\u9009\u3001\u6807\u7b7e\u548c\u957f\u63d0\u793a\u8bcd\u7f16\u8f91\u3001\u6309\u4efb\u52a1\u9009\u56fe\u4e0e\u8d44\u6599\u5206\u6790\u3002",
     "developerName": "Local developer",
     "category": "Productivity",
     "capabilities": [
@@ -17,8 +17,8 @@
       "Write"
     ],
     "defaultPrompt": [
-      "打开离线图片与提示词管理库",
-      "读取离线图库当前选中素材并按我的要求分析"
+      "\u6253\u5f00\u79bb\u7ebf\u56fe\u7247\u4e0e\u63d0\u793a\u8bcd\u7ba1\u7406\u5e93",
+      "\u8bfb\u53d6\u79bb\u7ebf\u56fe\u5e93\u5f53\u524d\u9009\u4e2d\u7d20\u6750\u5e76\u6309\u6211\u7684\u8981\u6c42\u5206\u6790"
     ]
   },
   "mcpServers": "./.mcp.json"

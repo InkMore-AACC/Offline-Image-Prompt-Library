@@ -2,12 +2,12 @@
 
 选择一个本地图片文件夹，在 Codex 右侧浏览图片、管理标签和长提示词，按需分析或创作。不依赖 Eagle。
 
-当前版本：`1.0.0+codex.20260916140107`。两个插件独立安装、独立运行，不自动互相同步。
+当前版本：`1.0.0+codex.20260916142516`。两个插件独立安装、独立运行，不自动互相同步。
 
 ## 下载和安装
 
 1. Windows 电脑准备好 **Codex 桌面客户端、Python 3.10 或更新版，以及支持 `codex plugin add` 的 Codex CLI**。安装了桌面客户端不代表终端一定能找到 CLI。
-2. [下载完整安装包](https://github.com/InkMore-AACC/Offline-Image-Prompt-Library/raw/refs/heads/main/downloads/offline-image-library-1.0.0.zip)，先完整解压，再进入有 `安装插件.cmd` 和 `install.py` 的那一层目录。不要只下载 plugin 子目录，也不要在压缩包内直接运行。
+2. [下载完整安装包](https://github.com/InkMore-AACC/Offline-Image-Prompt-Library/archive/refs/heads/main.zip)，先完整解压，再进入有 `安装插件.cmd` 和 `install.py` 的那一层目录。不要只下载 plugin 子目录，也不要在压缩包内直接运行。
 3. 双击 **安装插件.cmd**，等窗口明确显示“安装成功”。安装器会在你的用户目录生成本机路径，不使用作者电脑的路径。通常不需要管理员权限。
 4. 在 Codex 中**新建任务**，发送：**打开离线图片与提示词管理库**。
 5. 页面打开后点击“选择图库文件夹”，选择你自己的图片目录。
@@ -48,7 +48,7 @@
 
 ## 数据与备份
 
-安装包不含图库图片、个人提示词、选图记录或个人配置。图片放在你自己选择的文件夹，备份时复制整个图库文件夹，包括可见的“图库资料”子目录。
+安装包随附 image2.5参考 的 541 张原图、名称、标签和完整提示词，不含任务选图记录、运行配置或其他素材文件夹。图片放在你自己选择的文件夹，备份时复制整个图库文件夹，包括可见的“图库资料”子目录。
 
 插件安装在 `%USERPROFILE%\plugins\offline-image-library`。运行配置及独立 Python 环境位于 `%USERPROFILE%\Documents\Codex\OfflineLibraryData`。 升级重新运行安装器，图库资产不随插件覆盖；安装器保留旧插件备份。不要把运行配置提交到 GitHub。
 
@@ -70,3 +70,9 @@
 支持 MP4、WebM、MOV、MKV、AVI、M4V、MPEG/MPG、TS/MTS/M2TS、OGV。浏览器支持的编码直接播放；其他编码通过本地 FFmpeg 生成 H.264/AAC MP4 播放缓存，原文件、扩展名和排序保持原样。生成预览不调用 AI、不联网，第一次转换可能需要等待。
 
 需要 FFmpeg 和 ffprobe 位于 PATH；未安装时图片功能仍可用，离线版会提示视频索引依赖缺失。安装器不会自动安装 FFmpeg，可从 FFmpeg 官方下载页安装 Windows 构建后重开图库服务。
+
+## 随插件发布的参考素材
+
+完整仓库安装包随附 `plugin/assets/image2.5参考`：541 张原图及 `manifest.json` 中的名称、标签和完整提示词。安装器复制这些随附素材并校验原图 SHA-256；安装后选择自己的图库，点击“导入随附参考素材”，即可导入平铺的 `image2.5参考` 文件夹。相同内容跳过；同名不同内容保留并另起文件名；导入不会覆盖已有修改。
+
+请下载 GitHub 完整仓库 main.zip，素材随该安装包发布；旧 downloads 目录的小安装包不再作为发布入口。随附图片和提示词用于参考，其权利仍属于原作者，随附不构成额外授权。

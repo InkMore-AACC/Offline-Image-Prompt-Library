@@ -10,8 +10,12 @@ def main():
  cli=shutil.which('codex.cmd') or shutil.which('codex')
  if sys.version_info<(3,10):raise RuntimeError('需要 Python 3.10 或更新版本。')
  if not cli:raise RuntimeError('没有找到 Codex 命令。请先安装 Codex CLI，并重新运行安装程序。')
- for f in ['plugin/.codex-plugin/plugin.json','plugin/scripts/hub.py','helpers/create_basic_plugin.py']:
+ for f in ['plugin/assets/image2.5参考/manifest.json','plugin/.codex-plugin/plugin.json','plugin/scripts/hub.py','helpers/create_basic_plugin.py']:
   if not (root/f).is_file():raise RuntimeError('请完整解压安装包后运行：'+f)
+ sys.path.insert(0,str(root/'plugin/scripts'))
+ from bundled_assets import validate_bundle
+ bundle=validate_bundle(root/'plugin/assets/image2.5参考')
+ print('随附参考素材校验通过：'+str(len(bundle['items']))+' 张，包含完整提示词和标签。')
  print('插件安装位置：'+str(dest))
  print('Python：'+sys.executable)
  subprocess.run([cli,'--version'],check=True)
@@ -47,7 +51,7 @@ def main():
  installed=json.loads(subprocess.check_output([cli,'plugin','list','--json'],text=True,encoding='utf-8'))
  if not any(x.get('pluginId')=='offline-image-library@'+name and x.get('installed') and x.get('enabled') for x in installed.get('installed',[])):raise RuntimeError('缓存注册回读未确认，请保留完整输出检查。')
  print('安装成功。在 Codex 新建对话说“打开离线图片与提示词管理库”。无需启动 Eagle。')
- print('本安装程序不会复制或覆盖图库图片；首次使用点击选择图库文件夹。')
+ print('已安装随附参考素材。打开插件后选择自己的图库，点击“导入随附参考素材”；不会覆盖已有图片和资料。')
 
 if __name__=='__main__':
  try:main()
