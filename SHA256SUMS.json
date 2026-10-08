@@ -2,9 +2,10 @@
   ".gitattributes": "bf4c5f3579ae2fee5edb0e154b78a9c4dca7a846121959315db9ab356393a418",
   ".gitignore": "157a6bbedec20c00d0050b43f4d9586513d90966162995798772cb5e9f27707d",
   "AGENTS.md": "397182e5acc3965618cb8f9b72f4f6fe3b76c0fd631dabb5b1686425de8d1741",
-  "README.md": "107459b33dd842ba85737e707dcddd55192f20c569dd3b6aaf5d5da0418b7228",
+  "README.md": "3940a15fc8705aa7762cee1f97c0548df71dd4af39079a2d174116de02ec9876",
   "THIRD_PARTY_NOTICES.md": "cff7f441df38d1ede009c0110fdc1e8923e70ae86dcdcc4d784cacca9fd560e3",
-  "docs/VALIDATION.md": "e72aa69910a21e0b50e7ada903873c379c2a3b20657dd5582c2799efd9d3151b",
+  "docs/VALIDATION.md": "e2f9c9a5722f408b33106fd579f6058f398a48b3e812e16c6f6f0f961c855548",
+  "docs/安装与排错.md": "eb5830679457690e872cc839f215c53d7aee3a038da9fec1e3d6646e11857838",
   "helpers/create_basic_plugin.py": "a0dfca09c7ecc8f30012cb2111acfdf733eac7c5bd73e4edb154a45487de303f",
   "helpers/identifier_validation.py": "680ce5b775ee5410ecf808fad40350dc4df2cc4a7003363f4c4c7f9d7c0be918",
   "helpers/read_marketplace_name.py": "0be0d7e327688b70300baa4fff448a8e24f4c00ce71340f9c6299d21c333cc65",
@@ -557,8 +558,9 @@
   "plugin/assets/image2.5参考/manifest.json": "05ef17127ee0b0b7f8e4374609057d8796d7e013a87c8d32e2b7666c7b1925f6",
   "plugin/scripts/browse_backend.py": "b503cd198b536436981ab6410f1a992a12e7cc7e7168afeae17728860092dc0d",
   "plugin/scripts/bundled_assets.py": "d28ca26b5950671006c0533aac31cbe4d1ec7af4f372ea25ac526dd3b98c0ff2",
+  "plugin/scripts/codex_lifecycle.py": "e3289749e475bf9fe042edae963c1b7c9c2ecb570c1540d5ebaa5ef46a5c1fe9",
   "plugin/scripts/color_match.py": "29b0117a4ac80f5b24fbe2d60942e7d8a7da793462677645d26ea82578cc5a26",
-  "plugin/scripts/hub.py": "d03b68f79aadef24133a9394e1ee5bd3a67ac2d6a100c82b7a0749642b63a195",
+  "plugin/scripts/hub.py": "19e521e6216997407f7d4a9aad46f6690266aa3a163624c2016d1839d190ddfa",
   "plugin/scripts/storage.py": "ec5253c45d48d944b76ed3021ca1a75e2c7f1b31cfbedef4df3ced275dafc98d",
   "plugin/scripts/video_media.py": "80b154dc64f84c311ac7050761b781aa1c16caa7ebf66bd2e93855dbe639125a",
   "plugin/skills/offline-library/SKILL.md": "7362e4f85500ef2cf4417c8c1b3f0d7f43f811f372c765e0ee700910165a95a4",
@@ -571,5 +573,7 @@
   "plugin/tests/test_video_media.py": "4d7bcb38884a47720b6ad9782c57240b8e65c549df9547e7dc2cecef32726401",
   "plugin/tests/test_video_requests.py": "b4494d97fd8e87d3ae684b802b1f0e04dbb4a1f5d4c169862316dbaf0ee07678",
   "plugin/tests/test_video_storage.py": "287eb8cb58be3fc1baa44cf018801f9a2cd30b889190eaf0d1976eab78efbb75",
-  "plugin/web/index.html": "87fccbe94bba8850d4a726388862695ae83c2b381ab131b57a5962b798c7564c"
+  "plugin/web/index.html": "87fccbe94bba8850d4a726388862695ae83c2b381ab131b57a5962b798c7564c",
+  "tests/test_codex_lifecycle.py": "a6f392638090ebbbe51809cd3d460c804ac5bfa5abb6a66ef5e4d4fb8d9e526d",
+  "使用说明.md": "97605477e78924841fd8fa54846a1bf6d5b089c1637e7a72cdd1ee52f295e0f4"
 }

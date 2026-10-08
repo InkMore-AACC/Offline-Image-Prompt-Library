@@ -1,3 +1,4 @@
+import codex_lifecycle
 from video_media import serve_media, is_video, playback_file, PreviewPending
 """Standalone local folder library, HTTP and MCP. No Eagle calls."""
 import argparse,json,mimetypes,os,secrets,subprocess,sys,threading,time
@@ -115,9 +116,14 @@ def serve():
         try:STORE=Store(json.loads((STATE/'config.json').read_text(encoding='utf-8'))['path'])
         except Exception as e:print(str(e),file=sys.stderr)
     server=ThreadingHTTPServer(('127.0.0.1',PORT),Handler);server.csrf=secrets.token_urlsafe(32)
-    threading.Thread(target=monitor,daemon=True).start();server.serve_forever()
+    threading.Thread(target=monitor,daemon=True).start()
+    codex_lifecycle.watch_owners(server,STATE)
+    try:server.serve_forever()
+    finally:server.server_close()
 
 def ensure_server():
+    managed=codex_lifecycle.register_owner(STATE)
+    child_env={**os.environ,'CODEX_LIBRARY_MANAGED':'1' if managed else '0'}
     def alive():
         with urlopen(BASE+'/health',timeout=2) as r:
             if json.load(r).get('app')!='offline-image-library':raise RuntimeError('离线图库端口被其他程序占用')
@@ -125,7 +131,7 @@ def ensure_server():
     except OSError:pass
     STATE.mkdir(parents=True,exist_ok=True)
     with (STATE/'server.log').open('ab') as log:
-        subprocess.Popen([sys.executable,str(Path(__file__).resolve()),'serve'],stdin=subprocess.DEVNULL,stdout=log,stderr=log,creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
+        subprocess.Popen([sys.executable,str(Path(__file__).resolve()),'serve'],stdin=subprocess.DEVNULL,stdout=log,stderr=log,creationflags=(subprocess.CREATE_NO_WINDOW|subprocess.DETACHED_PROCESS) if os.name=='nt' else 0,start_new_session=os.name!='nt',env=child_env)
     for _ in range(40):
         time.sleep(.15)
         try:alive();return BASE
@@ -186,7 +192,9 @@ def mcp():
         try:
             m=json.loads(line);rid=m.get('id');method=m.get('method');p=m.get('params',{})
             if rid is None:continue
-            if method=='initialize':r={'protocolVersion':p.get('protocolVersion','2024-11-05'),'capabilities':{'tools':{}},'serverInfo':{'name':'offline-image-library','version':'1.0.0'}}
+            if method=='initialize':
+                codex_lifecycle.on_initialize(STATE,ensure_server)
+                r={'protocolVersion':p.get('protocolVersion','2024-11-05'),'capabilities':{'tools':{}},'serverInfo':{'name':'offline-image-library','version':'1.0.0'}}
             elif method=='tools/list':r={'tools':TOOLS}
             elif method=='ping':r={}
             elif method=='tools/call':
