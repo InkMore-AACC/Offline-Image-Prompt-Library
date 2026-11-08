@@ -2,6 +2,13 @@
 import copy, hashlib, json, re, shutil
 from pathlib import Path
 
+BUNDLE_FOLDERS=('image2.5参考','小红书提示词库')
+SOURCE_FIELDS=('source_url','source_title','author','prompt_note','prompt_origin','note_id')
+
+def bundle_path(assets,folder='image2.5参考'):
+    if folder not in BUNDLE_FOLDERS:raise ValueError('未知随附素材集')
+    return Path(assets)/folder
+
 def sha(path):
     h=hashlib.sha256()
     with Path(path).open('rb') as f:
@@ -11,7 +18,7 @@ def sha(path):
 def validate_bundle(bundle):
     bundle=Path(bundle).resolve()
     manifest=json.loads((bundle/'manifest.json').read_text(encoding='utf-8'))
-    if manifest.get('format')!=1 or manifest.get('folder')!='image2.5参考' or not isinstance(manifest.get('items'),list):raise ValueError('随附素材目录不完整，请下载完整仓库安装包')
+    if manifest.get('format')!=1 or manifest.get('folder') not in BUNDLE_FOLDERS or not isinstance(manifest.get('items'),list):raise ValueError('随附素材目录不完整，请下载完整仓库安装包')
     names=set()
     for i in manifest['items']:
         name=i.get('file','');p=bundle/name
@@ -19,6 +26,7 @@ def validate_bundle(bundle):
         names.add(name.casefold())
         if p.is_symlink() or p.resolve().parent!=bundle or not p.is_file() or p.stat().st_size!=i.get('size') or sha(p)!=i.get('sha256'):raise ValueError('随附素材校验失败：'+name)
         if not isinstance(i.get('name'),str) or not isinstance(i.get('annotation'),str) or not isinstance(i.get('tags'),list) or not all(isinstance(t,str) for t in i['tags']):raise ValueError('随附提示词或标签无效')
+        if any(k in i and not isinstance(i[k],str) for k in SOURCE_FIELDS):raise ValueError('随附来源资料无效')
     return manifest
 
 def import_bundle(store,bundle,library_path):
@@ -30,11 +38,11 @@ def import_bundle(store,bundle,library_path):
         ledger=store.db.setdefault('bundledReferences',{})
         live={r['hash'] for r in store.db['items'].values() if not r.get('missingSince')}
         jobs=[];skipped=0;conflicts=0
-        target=store.root/'image2.5参考'
+        folder=manifest['folder'];target=store.root/folder
         if target.is_symlink() or getattr(target,'is_junction',lambda:False)() or target.resolve().parent!=store.root:raise ValueError('参考目录不能指向图库之外')
         used=set()
         for i in manifest['items']:
-            key=i['file']+'|'+i['sha256'];record=ledger.get(key)
+            key=(folder+'|' if folder!='image2.5参考' else '')+i['file']+'|'+i['sha256'];record=ledger.get(key)
             if record and record.get('done'):skipped+=1;continue
             if not record:
                 if i['sha256'] in live:skipped+=1;continue
@@ -64,6 +72,8 @@ def import_bundle(store,bundle,library_path):
                 if not row or row['hash']!=i['sha256']:raise RuntimeError('图片索引未完成：'+p.name)
                 desired={'name':i['name'],'tags':i['tags'],'annotation':i['annotation']}
                 defaults={'name':p.stem,'tags':[],'annotation':''}
+                for field in SOURCE_FIELDS:
+                    if field in i:desired[field]=i[field];defaults[field]=None
                 if any(row.get(k) not in (defaults[k],desired[k]) for k in desired):conflicts+=1
                 else:row.update(desired);imported+=1
                 record['done']=True
@@ -71,4 +81,4 @@ def import_bundle(store,bundle,library_path):
         except Exception:store.db=before;raise
         disk=json.loads(store.file.read_text(encoding='utf-8'))
         if disk!=store.db:raise RuntimeError('随附素材资料回读不一致')
-        return {'verified':True,'imported':imported,'skipped':skipped,'preservedEdits':conflicts,'folder':'image2.5参考'}
+        return {'verified':True,'imported':imported,'skipped':skipped,'preservedEdits':conflicts,'folder':folder}

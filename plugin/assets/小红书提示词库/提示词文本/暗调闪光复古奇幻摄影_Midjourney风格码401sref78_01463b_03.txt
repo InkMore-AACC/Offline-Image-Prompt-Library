@@ -1,0 +1,11 @@
+暗调闪光复古奇幻摄影_Midjourney风格码401sref78_01463b_03
+
+标签：小红书、第四批、原作者提示词、风格：暗调闪光复古奇幻摄影、Midjourney、SREF、原文提示词、默认P需自备
+作者：Midjourney sref 风格码
+来源：https://www.xiaohongshu.com/explore/6a4765b3000000001101463b
+
+提示词：
+A majestic sphynx cat wearing an ornate white Elizabethan ruff collar and a dark velvet royal robe --sref 786912539 2119823584 1752791185 --p
+
+使用条件与原词说明：
+原文--p没有代码，将调用使用者默认P，未公开作者对应P。

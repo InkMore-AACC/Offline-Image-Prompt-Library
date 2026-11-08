@@ -1,0 +1,16 @@
+梦核巨物超现实CG_东方巨物的提示词怎么写_03d2e1_02
+
+标签：小红书、第三批、原作者提示词、风格：梦核巨物超现实CG、风格预设、需补充主体
+作者：灵犀AIGC
+来源：https://www.xiaohongshu.com/explore/6abf6703000000001303d2e1
+
+提示词：
+这组「东方巨物」国风图，8 张提示词可以归纳成同一个结构：
+【巨大单一自然物】当舞台  +  【1%~3% 体量的古装小人】做点睛  +  【互补色】拉开层次  +  【柔雾天光】定氛围
+落到提示词上，几个高频且有效的英文词：
+- 构图：cinematic ultra-wide shot（电影超广角）、symmetrical composition（对称框景）
+- 体量：extreme scale contrast / tiny figure（极致大小对比，这是「仙气」的来源）
+- 光：soft diffused light、misty、overexposed white sky（柔雾、过曝天光，制造呼吸感）
+- 色：muted green palette、desaturated cream（低饱和，避免艳俗是关键）
+- 收尾：surreal miniature fantasy world, 8k（定调 + 画质）
+复刻方法：把「巨大自然物」换成蘑菇 / 芦苇 / 珊瑚 / 麦田，小人描述保留，互补色跟着换——绿配黄、蓝配粉、白配红，基本都能跑出同款微缩仙侠感。#AI绘画 #AIGC #国风 #提示词 #Midjourney

@@ -9,7 +9,7 @@ from urllib.request import Request,urlopen
 from urllib.error import HTTPError
 from storage import Store,atomic
 import browse_backend
-from bundled_assets import import_bundle
+from bundled_assets import import_bundle,bundle_path
 
 ROOT=Path(__file__).resolve().parents[1]
 STATE=Path(os.environ.get('OFFLINE_LIBRARY_STATE',str(Path.home()/'Documents/Codex/OfflineLibraryData')))
@@ -103,7 +103,7 @@ class Handler(BaseHTTPRequestHandler):
             with CONFIG_LOCK:
                 if self.path=='/api/select':return self.send(current().select(a.get('taskId'),a['ids']))
                 if self.path=='/api/edit':return self.send(current().edit(a))
-                if self.path=='/api/import-bundled':return self.send(import_bundle(current(),ROOT/'assets/image2.5参考',a.get('libraryPath','')))
+                if self.path=='/api/import-bundled':return self.send(import_bundle(current(),bundle_path(ROOT/'assets',a.get('bundle','image2.5参考')),a.get('libraryPath','')))
                 if self.path=='/api/edit-many':return self.send(current().edit_many(a))
                 if self.path=='/api/save-analysis':return self.send(current().save_analysis(a))
             return self.send({'error':'not found'},404)
@@ -131,7 +131,7 @@ def ensure_server():
     except OSError:pass
     STATE.mkdir(parents=True,exist_ok=True)
     with (STATE/'server.log').open('ab') as log:
-        subprocess.Popen([sys.executable,str(Path(__file__).resolve()),'serve'],stdin=subprocess.DEVNULL,stdout=log,stderr=log,creationflags=(subprocess.CREATE_NO_WINDOW|subprocess.DETACHED_PROCESS) if os.name=='nt' else 0,start_new_session=os.name!='nt',env=child_env)
+        subprocess.Popen([sys.executable,str(Path(__file__).resolve()),'serve'],stdin=subprocess.DEVNULL,stdout=log,stderr=log,creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0,start_new_session=os.name!='nt',env=child_env)
     for _ in range(40):
         time.sleep(.15)
         try:alive();return BASE

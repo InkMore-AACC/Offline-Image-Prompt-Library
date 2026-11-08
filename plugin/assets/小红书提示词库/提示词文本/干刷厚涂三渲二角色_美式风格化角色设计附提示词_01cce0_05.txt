@@ -1,0 +1,12 @@
+干刷厚涂三渲二角色_美式风格化角色设计附提示词_01cce0_05
+
+标签：小红书、第三批、原作者提示词、风格：干刷厚涂三渲二角色、角色设计、画风预设、需补充角色外貌
+作者：茜_AI
+来源：https://www.xiaohongshu.com/explore/6ad9c9c5000000002c01cce0
+
+提示词：
+cel-shaded stylized American cartoon design with angular features, slightly elongated face, mature and not Disney-rounded, classical oil painting impasto texture, structure-driven dry brushstrokes following the form, layered color blocks, soft wet-into-wet color transitions, golden hour warm backlight, warm orange-gold rim light, cool blue-purple complementary shadows, strong warm-cool contrast, soft subsurface scattering, translucent skin, matte finish
+三渲二美式卡通风格化造型（有棱角、脸型略拉长、成人化，非迪士尼圆润），古典油画厚涂质感，结构导向的干刷笔触跟随形体走向，色块分层堆叠，柔和混色过渡，黄昏黄金时刻暖逆光，暖橙金轮廓光，冷蓝紫互补暗部，强烈冷暖对比，柔和次表面散射，皮肤通透，亚光质感
+
+使用条件与原词说明：
+原作者明确要求在画风提示词后添加角色外貌描述，保留为风格预设。

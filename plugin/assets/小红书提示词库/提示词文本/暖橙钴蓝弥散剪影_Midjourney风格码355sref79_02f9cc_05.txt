@@ -1,0 +1,8 @@
+暖橙钴蓝弥散剪影_Midjourney风格码355sref79_02f9cc_05
+
+标签：小红书、第三批、原作者提示词、风格：暖橙钴蓝弥散剪影、Midjourney、极简、弥散、剪影
+作者：Midjourney sref 风格码
+来源：https://www.xiaohongshu.com/explore/696f36ef000000000a02f9cc
+
+提示词：
+A minimalist staircase rising diagonally into a soft cloud layer.--raw --sref 798619805 --v 7 --sv 6

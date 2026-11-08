@@ -1,0 +1,11 @@
+几何折纸角色静物摄影_用nanobanana生成超细节折纸角色附提_03fd28_03
+
+标签：小红书、第三批、原作者提示词、风格：几何折纸角色静物摄影、折纸、纸模、NanoBanana、需补角色
+作者：Jacky.AI
+来源：https://www.xiaohongshu.com/explore/68da582f000000000b03fd28
+
+提示词：
+A hyper-detailed origami version of [CHARACTER], folded from high-quality colored paper with crisp edges and realistic paper texture. The folds capture the character’s iconic features, outfit, and silhouette in a simplified geometric form. Placed on a clean studio surface with soft shadows. Minimalist collectible art style, photorealistic detail, sharp focus. 1080x1080 square format.
+
+使用条件与原词说明：
+作者使用[CHARACTER]占位，替换为所需角色名。

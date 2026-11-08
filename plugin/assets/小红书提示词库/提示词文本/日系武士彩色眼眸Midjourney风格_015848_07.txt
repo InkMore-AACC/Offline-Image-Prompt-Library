@@ -1,0 +1,10 @@
+日系武士彩色眼眸Midjourney风格_015848_07
+
+标签：小红书、原作者提示词、系列示例、原帖模板
+作者：凹凸曼小妞
+来源：https://www.xiaohongshu.com/explore/6a5f0aec000000000f015848
+
+提示词：
+/imagine female samurai, colorful eyes, yellow background --ar 2:3 --sref 8334865810 --profile txgf1m1 --stylize 1000 --draft
+	
+/imagine female samurai, colorful eyes, yellow background --ar 2:3 --sref 8334865810 --profile txgf1m1 --stylize 1000

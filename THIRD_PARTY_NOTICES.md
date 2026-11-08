@@ -1,7 +1,14 @@
 # 第三方来源
 
-本插件的图库界面延续 https://github.com/InkMore-AACC/Eagle-2-Codex 的 Eagle 版，并改用独立本地文件夹存储。本安装包不附带任何案例图片或案例提示词资料。
+本插件的图库界面延续 https://github.com/InkMore-AACC/Eagle-2-Codex 的 Eagle 版，并改用独立本地文件夹存储。本安装包包含两个独立的参考素材集，素材权利与插件程序分开。
 
 helpers 内安装辅助脚本来自 Codex plugin-creator Skill，随安装器保留；未对其另行声明所有权。
 
 运行时使用 Pillow，安装器从软件源单独安装该依赖。其许可及来源见 https://github.com/python-pillow/Pillow 。
+
+## 随附素材
+
+- `plugin/assets/image2.5参考`：541张既有参考图片与对应资料，保留其既有来源与说明。
+- `plugin/assets/小红书提示词库`：2169张小红书原图及对应公开提示词/模板、中文名称、标签、作者和笔记来源；逐条来源在`来源资料.json`，提示词和使用条件在`manifest.json`及同名TXT中。
+
+图片、提示词、商标和人物等的权利归其各自原作者或权利人所有；收录不意味着插件作者拥有这些权利，也不授予额外商用或再许可权利。插件程序的许可不自动适用于收录素材。已知出图与原词差异照实保留，不把自行反推的提示词标作作者原词。

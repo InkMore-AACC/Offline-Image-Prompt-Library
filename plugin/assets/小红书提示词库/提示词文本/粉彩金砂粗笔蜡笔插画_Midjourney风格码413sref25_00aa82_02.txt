@@ -1,0 +1,11 @@
+粉彩金砂粗笔蜡笔插画_Midjourney风格码413sref25_00aa82_02
+
+标签：小红书、第四批、原作者提示词、风格：粉彩金砂粗笔蜡笔插画、Midjourney、SREF、原文提示词、默认P需自备
+作者：Midjourney sref 风格码
+来源：https://www.xiaohongshu.com/explore/6a965bc1000000002700aa82
+
+提示词：
+cute tatoo spiritual animal piggy --chaos 50 --sref 2579890761 --p --stylize 1000 --hd
+
+使用条件与原词说明：
+原文--p无具体代码。

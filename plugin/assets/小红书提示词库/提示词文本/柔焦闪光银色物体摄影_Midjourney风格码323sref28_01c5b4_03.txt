@@ -1,0 +1,11 @@
+柔焦闪光银色物体摄影_Midjourney风格码323sref28_01c5b4_03
+
+标签：小红书、第四批、原作者提示词、风格：柔焦闪光银色物体摄影、Midjourney、SREF、原文提示词、默认P需自备
+作者：Midjourney sref 风格码
+来源：https://www.xiaohongshu.com/explore/68d51016000000001201c5b4
+
+提示词：
+Drone, clean background --sref 2889748792 --p --c 3 --sw 300 --stylize 800
+
+使用条件与原词说明：
+原文--p无具体代码。

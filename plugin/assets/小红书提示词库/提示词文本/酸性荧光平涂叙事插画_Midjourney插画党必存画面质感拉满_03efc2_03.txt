@@ -1,0 +1,11 @@
+酸性荧光平涂叙事插画_Midjourney插画党必存画面质感拉满_03efc2_03
+
+标签：小红书、第四批、原作者提示词、风格：酸性荧光平涂叙事插画、Midjourney、P值、SREF、需补主体
+作者：有点儿西东
+来源：https://www.xiaohongshu.com/explore/699eb915000000000e03efc2
+
+提示词：
+--sref 4019293496 4201804887 --profile ls1e8a7
+
+使用条件与原词说明：
+同卡公开的P与SREF组合，仅为风格参数，需添加主体；未在Midjourney实测。

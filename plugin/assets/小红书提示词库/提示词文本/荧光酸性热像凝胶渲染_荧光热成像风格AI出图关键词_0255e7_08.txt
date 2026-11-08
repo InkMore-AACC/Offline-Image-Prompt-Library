@@ -1,0 +1,12 @@
+荧光酸性热像凝胶渲染_荧光热成像风格AI出图关键词_0255e7_08
+
+标签：小红书、第三批、原作者提示词、风格：荧光酸性热像凝胶渲染、Midjourney、风格码、关键词模板、需补主体
+作者：punkgod
+来源：https://www.xiaohongshu.com/explore/6ae7608500000000180255e7
+
+提示词：
+--sref 1127465208-v 8.2 也可以尝试以下关键词
+Acid-gradient 3D illustration of [subject], fluorescent lime green, hot pink, cyan and electric blue, thermal-imaging color mapping, smooth glossy plastic skin, neon rim glow, soft chromatic aberration, blurred glowing edges, high saturation, vaporwave psychedelic palette, clean gradient background, no text, no logos.
+
+使用条件与原词说明：
+保留作者原始风格码写法及含[subject]占位的英文模板；需补主体，不包含示例的具体人物设定。

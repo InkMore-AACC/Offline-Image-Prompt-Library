@@ -1,0 +1,60 @@
+NanobananaPro不同建筑风格效果图提示词_00174a_03
+
+标签：小红书、原作者提示词、系列示例、原帖模板、建筑
+作者：AIGC学习簿
+来源：https://www.xiaohongshu.com/explore/694ddcfc000000001e00174a
+
+提示词：
+MIR-style architectural visualization,
+soft overcast lighting,
+poetic atmosphere,
+human-scale narrative,
+natural landscape
+适用：竞赛方案/公建 / 文化建筑
+	
+2️⃣ Luxigon 风格（商业 + 艺术）
+关键词定位：高级、克制、真实但不浮夸
+风格特征：真实但不“油亮”，色彩克制，偏自然色温，构图干净，空间逻辑清晰，商业与文化项目都很稳。
+AI 提示词：
+Luxigon-style rendering,
+natural color palette,
+refined composition,
+realistic but understated
+适用：高端商业/城市综合体/国际投标
+	
+3️⃣ Brick Visual 风格（商业效果图天花板）
+关键词定位：极致真实、空间震撼
+风格特征：强透视、广角，天空戏剧化，材质非常“到位”，人群、商业氛围很强
+AI 提示词：
+Brick Visual style,
+cinematic wide-angle,
+dramatic sky,
+highly realistic materials,
+strong spatial depth
+适用：商业综合体/地标项目/宣传级效果图
+	
+4️⃣ DBox 风格（地产广告王者）
+关键词定位：销售感、电影感、情绪拉满
+风格特征：日落 / 夜景，灯光极其精致，偏“广告大片”，人群精致、生活方式感强
+AI 提示词：
+DBOX-style visualization,
+cinematic sunset lighting,
+luxury lifestyle atmosphere,
+high-end real estate rendering
+	
+5️⃣ Plomp 风格（亚洲竞赛向）
+关键词定位：克制、干净、现代感
+风格特征：天空干净，构图理性，材质不过分强调
+AI提示词：
+Plomp-style architectural rendering,
+clean composition,
+modern minimal aesthetic
+	
+6️⃣ 一线商业效果图风
+关键词定位：高饱和 + 强商业氛围
+风格特征：蓝天 / 晚霞，灯光偏亮，商业氛围密集
+AI提示词：
+Chinese top-tier commercial visualization style,
+bright atmosphere,
+rich details,
+strong commercial vitality

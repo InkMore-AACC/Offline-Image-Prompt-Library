@@ -1,0 +1,11 @@
+直闪复古商业纪实摄影_Midjourney风格码412sref77_025d04_05
+
+标签：小红书、第四批、原作者提示词、风格：直闪复古商业纪实摄影、Midjourney、SREF、原文提示词、默认P需自备
+作者：Midjourney sref 风格码
+来源：https://www.xiaohongshu.com/explore/6a8bf7650000000029025d04
+
+提示词：
+Editorial for Vogue, high-fashion reportage of buidings in motion, a couple of old people slow dancing together, panning shot, dynamic energy, warm cinematic tones, grainy texture, luxurious magazine look, shallow depth of field, high-end photography, natural light, dynamic composition, stylish and elegant yet raw. --exp 30 --sref 779521602 --p --hd
+
+使用条件与原词说明：
+原文--p没有代码，将调用使用者默认P，未公开作者对应P。

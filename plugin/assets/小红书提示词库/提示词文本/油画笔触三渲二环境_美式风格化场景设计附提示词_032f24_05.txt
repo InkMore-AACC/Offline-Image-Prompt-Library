@@ -1,0 +1,17 @@
+油画笔触三渲二环境_美式风格化场景设计附提示词_032f24_05
+
+标签：小红书、第四批、原作者提示词、风格：油画笔触三渲二环境、缓存补筛
+作者：茜_AI
+来源：https://www.xiaohongshu.com/explore/6ad9d5d50000000033032f24
+
+提示词：
+cel-shaded 3D cartoon rendering, hand-painted oil painting texture, visible loose brushstrokes, impasto, layered color blocks, soft color transitions, soft outline, softly blended edges, soft subsurface scattering, shallow depth of field, cinematic framing, unified painterly treatment, matte finish
+--no plastic, ceramic, glossy, oily highlights, photorealistic, hard shadows, sharp edges, clean smooth gradients, CGI render, metallic, reflective, black outlines, people, person, character
+三渲二 3D 卡通渲染，手绘油画厚涂质感，可见的松散笔触，厚涂，色块分层堆叠，柔和混色过渡，柔和轮廓线，柔和融合的边缘，柔和次表面散射，浅景深，电影感构图，统一手绘处理，亚光质感
+	
+（可选）冷暖氛围提示词：
+① 冷 · 明亮（清冷白天 / 阴天柔和光 · 蓝灰色调）cold bright daylight, overcast soft diffused light, low contrast, cool blue-gray tones, pale muted colors, calm airy atmosphere
+②暖 · 明亮（黄金时刻 / 清晨暖阳 · 橙金黄调）golden hour warm sunlight, soft warm glow, warm orange-gold tones, gentle soft backlight, bright hopeful airy atmosphere
+
+使用条件与原词说明：
+通用转绘风格词，与同帖剩余示例已对照；同风格全库累计不超过五张。

@@ -1,0 +1,10 @@
+素绢低饱和工笔肖像_AI图生图操作流程_0385c6_04
+
+标签：小红书、第三批、原作者提示词、风格：素绢低饱和工笔肖像
+作者：心田农夫-Ai绘画师
+来源：https://www.xiaohongshu.com/explore/6a92ed6200000000200385c6
+
+提示词：
+A quiet oriental woman in simple white dress, modern Chinese gongbi painting, painting on aged silk, soft delicate line art, extremely low contrast, extremely low saturation, morandi color palette, gray‑green background, faint low‑contrast gongbi flowers on background, flowers blurred and secondary subject, flat coloring, no harsh shadow, hand‑painted meticulous brush texture, elegant restrained composition, ultra‑detailed
+Negative prompt: strong light and shadow, harsh shadow, 3d render, photograph, realistic photo, high saturation, bright vivid color, strong highlight, plastic texture, heavy makeup, sharp hard outline
+--ar 3:4。

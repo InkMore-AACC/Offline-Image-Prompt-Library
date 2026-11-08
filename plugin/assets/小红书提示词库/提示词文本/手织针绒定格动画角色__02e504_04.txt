@@ -1,0 +1,11 @@
+手织针绒定格动画角色__02e504_04
+
+标签：小红书、第四批、原作者提示词、风格：手织针绒定格动画角色、Midjourney、P值、SREF、需补主体
+作者：Autojourney
+来源：https://www.xiaohongshu.com/explore/6ad1fc15000000001402e504
+
+提示词：
+--sref 3414761933 --profile fzae662 rgqxhgb
+
+使用条件与原词说明：
+作者公开P与SREF风格参数组合，未公开每张主体词；保留原文，未实测。

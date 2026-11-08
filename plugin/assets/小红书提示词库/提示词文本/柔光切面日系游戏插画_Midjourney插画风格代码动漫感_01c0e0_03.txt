@@ -1,0 +1,11 @@
+柔光切面日系游戏插画_Midjourney插画风格代码动漫感_01c0e0_03
+
+标签：小红书、第四批、原作者提示词、风格：柔光切面日系游戏插画、Midjourney、P值、SREF、需补主体
+作者：Tabby Fashion
+来源：https://www.xiaohongshu.com/explore/689eeb2b000000001b01c0e0
+
+提示词：
+--sref 2003936994 --style raw --p u2agqxa --sw 200 --s 400 --niji 6
+
+使用条件与原词说明：
+作者公开P与SREF风格参数组合，未公开每张主体词；保留原文，未实测。

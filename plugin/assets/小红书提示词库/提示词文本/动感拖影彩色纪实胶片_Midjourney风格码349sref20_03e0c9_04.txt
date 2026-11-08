@@ -1,0 +1,11 @@
+动感拖影彩色纪实胶片_Midjourney风格码349sref20_03e0c9_04
+
+标签：小红书、第四批、原作者提示词、风格：动感拖影彩色纪实胶片、Midjourney、SREF、原文提示词、默认P需自备
+作者：Midjourney sref 风格码
+来源：https://www.xiaohongshu.com/explore/69407499000000001d03e0c9
+
+提示词：
+Extreme close-up, chaotic motion blur, inside a high-pressure Michelin kitchen during dinner rush. --sref 2003154966 --p --v 7 --sv 6
+
+使用条件与原词说明：
+原文--p没有代码，将调用使用者默认P，未公开作者对应P。

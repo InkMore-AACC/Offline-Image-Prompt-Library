@@ -1,0 +1,20 @@
+水彩南瓜之超好用的GPT提示词_0000bd_02
+
+标签：小红书、原作者提示词、系列示例、原帖模板、3D、水彩
+作者：沧海的AI工具箱
+来源：https://www.xiaohongshu.com/explore/6aa27d70000000002b0000bd
+
+提示词：
+Create a separate high-end editorial poster for each uploaded photo. Do not combine photos.
+	
+Strict 3:4 vertical, split horizontally 50/50.
+	
+Top: Keep the original photo faithful and photorealistic. Preserve faces, people, poses, clothing and objects. Subtle premium editorial grading.
+	
+Bottom: Turn the same scene into a small minimalist handmade paper illustration, centered with lots of warm-white negative space. Simple acrylic-style colors, imperfect brush lines and paper texture. Maximum 4 colors from the original photo.
+	
+Add minimal elegant editorial typography below the illustration: a short emotional title related to the photo, plus a tiny subtitle. Handwritten/modern art-book style.
+	
+Mood: quiet, poetic, refined, innocent, premium art-book aesthetic.
+	
+No cartoon, crayon, watercolor, 3D, glossy digital art or busy decoration.

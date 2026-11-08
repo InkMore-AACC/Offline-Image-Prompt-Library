@@ -1,0 +1,11 @@
+夜色颗粒诗意超现实摄影_Midjourney风格码364sref58_032971_03
+
+标签：小红书、第四批、原作者提示词、风格：夜色颗粒诗意超现实摄影、Midjourney、SREF、原文提示词、默认P需自备
+作者：Midjourney sref 风格码
+来源：https://www.xiaohongshu.com/explore/69a2d1f20000000022032971
+
+提示词：
+A surreal snapshot of a person in a vast, dark field at midnight. --chaos 20 --sref 5877700996 4815442863 2174344444 1699284549 3888100065 352184820 481439432 4866446247::2 --p --stylize 50 --sv 6
+
+使用条件与原词说明：
+原文--p没有代码，将调用使用者默认P，未公开作者对应P。

@@ -1,0 +1,14 @@
+{
+  "verified": true,
+  "export_date": "2026-11-08",
+  "images": 2169,
+  "image_bytes": 565050647,
+  "prompts": 2169,
+  "tags": 2169,
+  "sources": 2169,
+  "unique_sha256": 2169,
+  "largest_image_bytes": 1201376,
+  "source_images_unchanged": true,
+  "runtime_configuration_excluded": true,
+  "other_libraries_excluded": true
+}

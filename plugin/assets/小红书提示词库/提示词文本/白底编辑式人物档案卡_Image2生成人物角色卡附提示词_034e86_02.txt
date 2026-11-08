@@ -1,0 +1,31 @@
+白底编辑式人物档案卡_Image2生成人物角色卡附提示词_034e86_02
+
+标签：小红书、第五批、原作者提示词、风格：白底编辑式人物档案卡、角色设定、三视图、角色档案、模板需填写
+作者：鸿悟AI
+来源：https://www.xiaohongshu.com/explore/6a1e49c80000000038034e86
+
+提示词：
+请生成一张高端角色设定卡
+主角是：角色名
+角色设定：
+【职业】；【年龄】22岁，【身高】170cm；
+外貌特征：【发型/发色/五官特征/体型】；
+气质关键词：【优雅 / 冷静 / 锋利 / 温柔 / 神秘 / 高贵 / 叛逆 / 理性】；
+服装设定：
+主色调：
+版式要求：
+一张 3:4 竖版、白底、干净留白、杂志级排版的角色档案页；顶部是超大角色名字标题和一句角色标语；中间主体展示同一角色的三视图：正面、侧面、背面；右侧展示6个表情头像：平静、微笑、眨眼、认真、惊讶、思考；
+左侧是角色基础信息栏；
+底部展示服装拆解、配件拆解、局部细节特写、色板、角色简介、关键词标签、签名区；有细线分栏、精致 serif typography、高级感 editorial layout、官方设定集风格。
+画面风格：
+semi-realistic anime character design, premium artbook page, elegant editorial layout,luxury fashion catalog style, highly consistent character across all panels,soft studio lighting, refined facial features, clean white background,thin grid lines, polished rendering, delicate materials, sharp details,minimalist, sophisticated, premium, collectible character sheet.
+一致性要求：
+所有视角、表情、服装拆解都必须是同一个角色，脸型、发型、服装结构保持统一；版面整洁，信息清晰，像官方角色资料页，不要像普通海报。
+文字处理要求：
+文字以“排版感、设定集感”为主，允许是设计化文字块；如果模型不擅长准确文字，则优先保证版式美观与栏目完整。
+负面限制：
+不要杂乱背景，不要多余人物，不要多余手臂，不要变形五官，不要服装不一致
+不要低清晰度，不要过度饱和，不要廉价二次元海报感，不要Q版，不要卡通儿童风。
+
+使用条件与原词说明：
+作者通用模板，角色名、职业、外貌、服装和主色等留空字段需自行填写；示例体现杂志式档案排版。

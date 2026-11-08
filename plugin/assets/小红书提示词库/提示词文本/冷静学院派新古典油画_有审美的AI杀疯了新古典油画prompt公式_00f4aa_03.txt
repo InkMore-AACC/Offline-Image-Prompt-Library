@@ -1,0 +1,9 @@
+冷静学院派新古典油画_有审美的AI杀疯了新古典油画prompt公式_00f4aa_03
+
+标签：小红书、第四批、原作者提示词、风格：冷静学院派新古典油画、新古典主义、学院派油画
+作者：心心AI（有课）
+来源：https://www.xiaohongshu.com/explore/6a9f7529000000000b00f4aa
+
+提示词：
+Neoclassical oil painting, clean continuous contour lines, sculptural ideal beauty, a noblewoman in a white toga standing in a sunlit Roman portico, classical Greek profile, pyramid composition, balanced symmetry with columns receding in perspective, calm even illumination, marble-smooth polished finish with no visible brushwork, muted palette of marble white terracotta and olive green, heroic stillness, 18th century academic masterpiece
+neg: visible brushwork, dramatic chiaroscuro, ornate rococo decoration, dynamic motion, warm golden glow

@@ -1,0 +1,9 @@
+太可爱了分享一套万能prompt生成电影场景_03f6ee_06
+
+标签：小红书、原作者提示词、系列示例、原帖模板、3D、微缩
+作者：Design_韬
+来源：https://www.xiaohongshu.com/explore/696a02b1000000000a03f6ee
+
+提示词：
+Stylized, ultra-high-fidelity 3D isometric miniature model scene, 35-40 degree isometric perspective, palm-sized collectible scale, ultra-fine geometric structure, realistic minute details, soft studio lighting from the upper left, soft ambient occlusion, subtle soft shadows, neutral color grading, museum-quality product rendering, placed on a simple matte rectangular base, seamless pure white background, 1080x1080 resolution. [描述你要的电影，例如电影霸王别姬场景].
+工具：nano banana

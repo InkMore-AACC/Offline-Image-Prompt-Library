@@ -1,0 +1,38 @@
+{
+  "verified": true,
+  "plugin_version": "1.1.0+codex.20261108",
+  "existing_reference_images": 541,
+  "xhs_images": 2169,
+  "total_bundled_images": 2710,
+  "http_first_imports": [
+    {
+      "verified": true,
+      "imported": 541,
+      "skipped": 0,
+      "preservedEdits": 0,
+      "folder": "image2.5参考"
+    },
+    {
+      "verified": true,
+      "imported": 2169,
+      "skipped": 0,
+      "preservedEdits": 0,
+      "folder": "小红书提示词库"
+    }
+  ],
+  "xhs_repeat_import": {
+    "verified": true,
+    "imported": 0,
+    "skipped": 2169,
+    "preservedEdits": 0,
+    "folder": "小红书提示词库"
+  },
+  "original_bytes_checked": 2710,
+  "names_tags_prompts_checked": 2710,
+  "xhs_sources_checked": 2169,
+  "restart_readback": true,
+  "independent_edit_preserved": true,
+  "invalid_bundle_rejected": true,
+  "javascript_syntax": true,
+  "real_user_library_modified": false
+}

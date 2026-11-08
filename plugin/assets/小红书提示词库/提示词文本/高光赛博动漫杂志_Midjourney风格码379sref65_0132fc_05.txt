@@ -1,0 +1,13 @@
+高光赛博动漫杂志_Midjourney风格码379sref65_0132fc_05
+
+标签：小红书、第二批、原作者提示词、风格：高光赛博动漫杂志
+作者：Midjourney sref 风格码
+来源：https://www.xiaohongshu.com/explore/69e5da0200000000230132fc
+
+提示词：
+类型：Anime(动漫), Poster Design(海报设计), Cyberpunk(赛博朋克), 3D
+	
+🔘 anime magazine cover, dark gothic samurai girl crouching with a katana, masterpiece illustration, Title "MetaChat" --raw --sref 6589272480 --p --stylize 1000 --niji 7
+🔘 anime magazine cover, Lady Dimitrescu from Resident Evil Village, foreshortened claws toward viewer, Title "METACHAT", no overexpose --raw --sref 6589272480 --p --stylize 1000 --niji 7
+🔘 anime magazine cover, Extreme wide-angle perspective, a young man's hand is extremely close to the camera, title "METACHAT" --raw --sref 6589272480 --p --stylize 1000 --niji 7
+🔘 anime magazine cover, a blonde woman with messy hair, wearing glossy cat-ear headphones, red shining eyes, making a perfect rectangular finger frame pose --raw --sref 6589272480 --p --stylize 1000 --niji 7

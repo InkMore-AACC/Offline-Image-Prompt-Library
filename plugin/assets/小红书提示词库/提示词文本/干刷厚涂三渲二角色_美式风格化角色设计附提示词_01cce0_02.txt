@@ -1,0 +1,14 @@
+干刷厚涂三渲二角色_美式风格化角色设计附提示词_01cce0_02
+
+标签：小红书、第四批、原作者提示词、风格：干刷厚涂三渲二角色、Midjourney、风格预设、需补角色外貌
+作者：茜_AI
+来源：https://www.xiaohongshu.com/explore/6ad9c9c5000000002c01cce0
+
+提示词：
+角色概设计来自亚洲黑客松巅峰赛短片作品《HALF A BEAT 》
+【适用模型：Midjourney V8.2】
+
+cel-shadedstylized American cartoon design with angular features, slightly elongated face, mature and not Disney-rounded, classical oil painting impasto texture, structure-driven dry brushstrokes following the form, layered color blocks, soft wet-into-wet color transitions, golden hour warm backlight, warm orange-gold rim light, cool blue-purple complementary shadows, strong warm-cool contrast, soft subsurface scattering, translucent skin, matte finish
+
+使用条件与原词说明：
+作者明确说明需在风格词后增加角色外貌，保留统一风格词，未捏造逐图主体词。
